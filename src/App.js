@@ -1,9 +1,13 @@
 import React from 'react';
 import './App.css';
+import { ProviderContext } from './context';
+import TableStarWars from './pages/TableStarWars';
 
 function App() {
   return (
-    <span>Hello, App!</span>
+    <ProviderContext>
+      <TableStarWars />
+    </ProviderContext>
   );
 }
 

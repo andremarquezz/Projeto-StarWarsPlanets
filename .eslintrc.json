@@ -3,6 +3,9 @@
     "browser": true,
     "es2020": true
   },
+  "rules": {
+    "quotes": [2, "single", { "avoidEscape": true }]
+  },
   "extends": ["trybe-frontend"],
   "parserOptions": {
     "ecmaFeatures": {
