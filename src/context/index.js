@@ -6,20 +6,61 @@ export const StarWarsContext = createContext(INITIAL_STATE);
 
 export function ProviderContext({ children }) {
   const [data, setData] = useState([]);
-  const [dataFilter, setDataFilter] = useState([]);
+  const [filterData, setfilterData] = useState([]);
+  const [name, setName] = useState('');
+  const [column, setColumn] = useState('population');
+  const [comparison, setComparison] = useState('maior que');
+  const [value, setValue] = useState('0');
+  const [numericFilters, setNumericFilters] = useState([]);
+
+  const handleFilters = () => {
+    const newNumericFilters = {
+      column,
+      comparison,
+      value,
+    };
+    setNumericFilters([...numericFilters, newNumericFilters]);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
       const api = 'https://swapi-trybe.herokuapp.com/api/planets/';
       const { results } = await (await fetch(api)).json();
       setData(results);
-      setDataFilter(results);
+      setfilterData(results);
     };
     fetchData();
   }, []);
+
+  useEffect(() => {
+    const xab = data.filter((planet) => planet.name.toLowerCase().includes(name));
+
+    const result = numericFilters.reduce(
+      (acc, filter) => acc.filter((planet) => {
+        switch (filter.comparison) {
+        case 'maior que':
+          return planet[filter.column] > filter.value;
+        case 'menor que':
+          return planet[filter.column] < filter.value;
+        case 'igual a':
+          return planet[filter.column] === filter.value;
+        default:
+          return false;
+        }
+      }),
+      xab,
+    );
+    setfilterData(result);
+  }, [name, numericFilters]);
+
   const valueContext = {
     data,
-    dataFilter,
+    filterData,
+    setName,
+    handleFilters,
+    setColumn,
+    setComparison,
+    setValue,
   };
 
   return (
