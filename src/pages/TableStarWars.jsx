@@ -8,8 +8,20 @@ function TableStarWars() {
     handleFilters,
     setColumn,
     setComparison,
-    setValue } = useContext(StarWarsContext);
+    setValue,
+    numericFilters,
+    value: valueNumber,
+  } = useContext(StarWarsContext);
 
+  const showParameters = () => numericFilters.map(({ column, comparison, value }, i) => (
+    <ul key={ i }>
+      <li>{column}</li>
+      <li>{comparison}</li>
+      <li>{value}</li>
+    </ul>
+  ));
+  console.log(numericFilters[0].column);
+  console.log(showParameters());
   return (
     <>
       <form>
@@ -41,11 +53,12 @@ function TableStarWars() {
             onChange={ ({ target: { value } }) => setComparison(value) }
           >
             <option value="maior que">maior que</option>
-            <option value="menor  que">menor que</option>
+            <option value="menor que">menor que</option>
             <option value="igual a">igual a</option>
           </select>
         </label>
         <input
+          value={ valueNumber }
           type="number"
           data-testid="value-filter"
           onChange={ ({ target: { value } }) => setValue(value) }

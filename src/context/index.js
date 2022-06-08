@@ -10,7 +10,7 @@ export function ProviderContext({ children }) {
   const [name, setName] = useState('');
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
-  const [value, setValue] = useState('0');
+  const [value, setValue] = useState(0);
   const [numericFilters, setNumericFilters] = useState([]);
 
   const handleFilters = () => {
@@ -30,20 +30,21 @@ export function ProviderContext({ children }) {
       setfilterData(results);
     };
     fetchData();
+    // handleFilters();
   }, []);
 
   useEffect(() => {
     const xab = data.filter((planet) => planet.name.toLowerCase().includes(name));
-
+    console.log(xab);
     const result = numericFilters.reduce(
       (acc, filter) => acc.filter((planet) => {
         switch (filter.comparison) {
         case 'maior que':
-          return planet[filter.column] > filter.value;
+          return Number(planet[filter.column]) > Number(filter.value);
         case 'menor que':
-          return planet[filter.column] < filter.value;
+          return Number(planet[filter.column]) < Number(filter.value);
         case 'igual a':
-          return planet[filter.column] === filter.value;
+          return Number(planet[filter.column]) === Number(filter.value);
         default:
           return false;
         }
@@ -51,7 +52,7 @@ export function ProviderContext({ children }) {
       xab,
     );
     setfilterData(result);
-  }, [name, numericFilters]);
+  }, [name, numericFilters, data]);
 
   const valueContext = {
     data,
@@ -61,6 +62,8 @@ export function ProviderContext({ children }) {
     setColumn,
     setComparison,
     setValue,
+    numericFilters,
+    value,
   };
 
   return (
