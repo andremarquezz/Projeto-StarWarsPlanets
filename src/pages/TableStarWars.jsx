@@ -14,16 +14,18 @@ function TableStarWars() {
   } = useContext(StarWarsContext);
 
   const showParameters = () => numericFilters.map(({ column, comparison, value }, i) => (
-    <ul key={ i }>
-      <li>{column}</li>
-      <li>{comparison}</li>
-      <li>{value}</li>
-    </ul>
+    <div key={ i }>
+      <ul>
+        <li>{column}</li>
+        <li>{comparison}</li>
+        <li>{value}</li>
+      </ul>
+      <button type="button">delete</button>
+    </div>
   ));
-  console.log(numericFilters[0].column);
-  console.log(showParameters());
   return (
     <>
+      {showParameters()}
       <form>
         <input
           data-testid="name-filter"

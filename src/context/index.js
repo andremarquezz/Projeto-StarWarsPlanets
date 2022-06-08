@@ -34,8 +34,7 @@ export function ProviderContext({ children }) {
   }, []);
 
   useEffect(() => {
-    const xab = data.filter((planet) => planet.name.toLowerCase().includes(name));
-    console.log(xab);
+    const dataFilter = data.filter((planet) => planet.name.toLowerCase().includes(name));
     const result = numericFilters.reduce(
       (acc, filter) => acc.filter((planet) => {
         switch (filter.comparison) {
@@ -49,7 +48,7 @@ export function ProviderContext({ children }) {
           return false;
         }
       }),
-      xab,
+      dataFilter,
     );
     setfilterData(result);
   }, [name, numericFilters, data]);
