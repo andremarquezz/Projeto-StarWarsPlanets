@@ -2,20 +2,16 @@ import React, { useContext, useEffect, useState } from 'react';
 import { StarWarsContext } from '../context';
 
 function TableStarWars() {
-  const [options, setOptions] = useState();
-  const [optionsFilter, setOptionsFilter] = useState();
+  const valuesOptions = [
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ];
 
-  useEffect(() => {
-    const valuesOptions = [
-      'population',
-      'orbital_period',
-      'diameter',
-      'rotation_period',
-      'surface_water',
-    ];
-    setOptions(valuesOptions);
-    setOptionsFilter(valuesOptions);
-  }, []);
+  const [options] = useState(valuesOptions);
+  const [optionsFilter, setOptionsFilter] = useState(valuesOptions);
 
   const {
     filterData,
@@ -46,8 +42,13 @@ function TableStarWars() {
     );
   };
 
+  const deleteFilters = () => {
+    setOptionsFilter(options);
+    setNumericFilters([]);
+  };
+
   const showParameters = () => numericFilters.map(({ column, comparison, value }, i) => (
-    <div key={ i }>
+    <div key={ i } data-testid="filter">
       <ul>
         <li>{column}</li>
         <li>{comparison}</li>
@@ -103,6 +104,13 @@ function TableStarWars() {
         />
         <button type="button" data-testid="button-filter" onClick={ handleFilters }>
           Pesquisar
+        </button>
+        <button
+          type="button"
+          data-testid="button-remove-filters"
+          onClick={ deleteFilters }
+        >
+          Remover todos filtros
         </button>
       </form>
       <table>
