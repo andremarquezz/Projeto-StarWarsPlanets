@@ -56,13 +56,14 @@ export function ProviderContext({ children }) {
   const valueContext = {
     data,
     filterData,
-    setName,
     handleFilters,
+    value,
+    numericFilters,
+    setName,
     setColumn,
     setComparison,
     setValue,
-    numericFilters,
-    value,
+    setNumericFilters,
   };
 
   return (

@@ -1,17 +1,50 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { StarWarsContext } from '../context';
 
 function TableStarWars() {
+  const [options, setOptions] = useState();
+  const [optionsFilter, setOptionsFilter] = useState();
+
+  useEffect(() => {
+    const valuesOptions = [
+      'population',
+      'orbital_period',
+      'diameter',
+      'rotation_period',
+      'surface_water',
+    ];
+    setOptions(valuesOptions);
+    setOptionsFilter(valuesOptions);
+  }, []);
+
   const {
     filterData,
-    setName,
     handleFilters,
+    numericFilters,
+    setName,
     setColumn,
     setComparison,
     setValue,
-    numericFilters,
+    setNumericFilters,
     value: valueNumber,
   } = useContext(StarWarsContext);
+
+  useEffect(() => {
+    const handleOptions = () => {
+      const optionsFiltered = numericFilters.reduce(
+        (acc, { column }) => acc.filter((option) => option !== column),
+        options,
+      );
+      setOptionsFilter(optionsFiltered);
+    };
+    handleOptions();
+  }, [numericFilters, options]);
+
+  const deleteFilter = (index) => {
+    setNumericFilters(
+      numericFilters.filter((_param, paramIndex) => index !== paramIndex),
+    );
+  };
 
   const showParameters = () => numericFilters.map(({ column, comparison, value }, i) => (
     <div key={ i }>
@@ -20,9 +53,12 @@ function TableStarWars() {
         <li>{comparison}</li>
         <li>{value}</li>
       </ul>
-      <button type="button">delete</button>
+      <button type="button" onClick={ () => deleteFilter(i) }>
+        delete
+      </button>
     </div>
   ));
+
   return (
     <>
       {showParameters()}
@@ -40,11 +76,11 @@ function TableStarWars() {
             data-testid="column-filter"
             onChange={ ({ target: { value } }) => setColumn(value) }
           >
-            <option value="population">population</option>
-            <option value="orbital_period">orbital_period</option>
-            <option value="diameter">diameter</option>
-            <option value="rotation_period">rotation_period</option>
-            <option value="surface_water">surface_water</option>
+            {optionsFilter.map((option, i) => (
+              <option key={ i } value={ option }>
+                {option}
+              </option>
+            ))}
           </select>
         </label>
         <label htmlFor="operator">
