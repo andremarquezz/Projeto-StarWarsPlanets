@@ -10,7 +10,7 @@ export function ProviderContext({ children }) {
   const [name, setName] = useState('');
   const [column, setColumn] = useState('population');
   const [columnSort, setColumnSort] = useState('population');
-  const [comparison, setComparison] = useState('maior que');
+  const [comparison, setComparison] = useState('greater than');
   const [value, setValue] = useState(0);
   const [numericFilters, setNumericFilters] = useState([]);
 
@@ -53,11 +53,11 @@ export function ProviderContext({ children }) {
     const result = numericFilters.reduce(
       (acc, filter) => acc.filter((planet) => {
         switch (filter.comparison) {
-        case 'maior que':
+        case 'greater than':
           return Number(planet[filter.column]) > Number(filter.value);
-        case 'menor que':
+        case 'smaller than':
           return Number(planet[filter.column]) < Number(filter.value);
-        case 'igual a':
+        case 'equal to':
           return Number(planet[filter.column]) === Number(filter.value);
         default:
           return false;
