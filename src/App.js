@@ -1,5 +1,6 @@
 import React from 'react';
-import './App.css';
+// import '../dist/output.css';
+import './index.css';
 import { ProviderContext } from './context';
 import TableStarWars from './pages/TableStarWars';
 

@@ -19,6 +19,8 @@ function TableStarWars() {
     numericFilters,
     setName,
     setColumn,
+    setColumnSort,
+    handleSort,
     setComparison,
     setValue,
     setNumericFilters,
@@ -102,7 +104,11 @@ function TableStarWars() {
           data-testid="value-filter"
           onChange={ ({ target: { value } }) => setValue(value) }
         />
-        <button type="button" data-testid="button-filter" onClick={ handleFilters }>
+        <button
+          type="button"
+          data-testid="button-filter"
+          onClick={ handleFilters }
+        >
           Pesquisar
         </button>
         <button
@@ -112,6 +118,30 @@ function TableStarWars() {
         >
           Remover todos filtros
         </button>
+        <label htmlFor="columnSort">
+          Order by:
+          <select
+            name="columnSort"
+            id="columnSort"
+            onChange={ ({ target: { value } }) => setColumnSort(value) }
+          >
+            {options.map((option) => (
+              <option key={ option } value={ option }>
+                {option}
+              </option>
+            ))}
+          </select>
+        </label>
+        <label
+          htmlFor="sortIn"
+          onChange={ ({ target: { id } }) => handleSort(id) }
+        >
+          Sort In:
+          <input type="radio" name="sortIn" id="ASC" />
+          Ascending order
+          <input type="radio" name="sortIn" id="DESC" />
+          Descending order
+        </label>
       </form>
       <table>
         <thead>

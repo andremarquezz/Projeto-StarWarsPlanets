@@ -6,9 +6,10 @@ export const StarWarsContext = createContext(INITIAL_STATE);
 
 export function ProviderContext({ children }) {
   const [data, setData] = useState([]);
-  const [filterData, setfilterData] = useState([]);
+  const [filterData, setFilterData] = useState([]);
   const [name, setName] = useState('');
   const [column, setColumn] = useState('population');
+  const [columnSort, setColumnSort] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState(0);
   const [numericFilters, setNumericFilters] = useState([]);
@@ -22,15 +23,29 @@ export function ProviderContext({ children }) {
     setNumericFilters([...numericFilters, newNumericFilters]);
   };
 
+  const handleSort = (id) => {
+    const unknown = filterData.filter(
+      (planet) => planet[columnSort] === 'unknown',
+    );
+    const dataSort = filterData
+      .sort((a, b) => {
+        if (id === 'ASC') {
+          return +a[columnSort] - +b[columnSort];
+        }
+        return +b[columnSort] - +a[columnSort];
+      })
+      .filter((planet) => planet[columnSort] !== 'unknown');
+    setFilterData([...dataSort, ...unknown]);
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       const api = 'https://swapi-trybe.herokuapp.com/api/planets/';
       const { results } = await (await fetch(api)).json();
       setData(results);
-      setfilterData(results);
+      setFilterData(results);
     };
     fetchData();
-    // handleFilters();
   }, []);
 
   useEffect(() => {
@@ -50,7 +65,7 @@ export function ProviderContext({ children }) {
       }),
       dataFilter,
     );
-    setfilterData(result);
+    setFilterData(result);
   }, [name, numericFilters, data]);
 
   const valueContext = {
@@ -61,13 +76,17 @@ export function ProviderContext({ children }) {
     numericFilters,
     setName,
     setColumn,
+    setColumnSort,
+    handleSort,
     setComparison,
     setValue,
     setNumericFilters,
   };
 
   return (
-    <StarWarsContext.Provider value={ valueContext }>{children}</StarWarsContext.Provider>
+    <StarWarsContext.Provider value={ valueContext }>
+      {children}
+    </StarWarsContext.Provider>
   );
 }
 ProviderContext.propTypes = {
