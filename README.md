@@ -1,7 +1,7 @@
 <img src="https://img.shields.io/github/issues/andremarquezz/ProjetoStarWarsPlanets"/> <img src="https://img.shields.io/github/forks/andremarquezz/ProjetoStarWarsPlanets"/> <img src="https://img.shields.io/github/stars/andremarquezz/ProjetoStarWarsPlanets"/> <img src="https://img.shields.io/github/license/andremarquezz/ProjetoStarWarsPlanets"/> 
 
 <h1 align="center">StarWars Planets Search</h1>
-<p align="center">Uma aplicação que consulta uma API para recuperar dados dos planetas do universo de Star Wars.</p>
+<p align="center">Uma aplicação que consulta uma API para recuperar dados dos planetas do universo de Star Wars e filtra de acordo com os comandos do usuário.</p>
 <p align="center"> 
   <img src="src/StarWarsPlanets.gif">
  </p>
