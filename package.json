@@ -2,7 +2,6 @@
   "name": "starwars-planets",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://andremarquezz.github.io/ProjetoStarWarsPlanets",
   "engines": {
     "node": "16"
   },
