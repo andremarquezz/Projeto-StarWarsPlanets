@@ -35,7 +35,7 @@
 _Copie a URL abaixo e cole no seu navegador_
 
 ```jsx
-https://projetowallet.vercel.app/
+Não disponivel no momento.
 ```
 
 ### Localmente
